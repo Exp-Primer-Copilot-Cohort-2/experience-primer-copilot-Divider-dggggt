@@ -1,7 +1,24 @@
-// Create Web Server
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+// Create web server
+const express = require('express');
+const app = express();
+app.use(express.json());
 
-const server = http.createServer((req, res) => {
-  const filePath = path.join(__dirname
+// Create a comment store
+const comments = [];
+
+// Get comments
+app.get('/comments', (req, res) => {
+  res.json(comments);
+});
+
+// Post a comment
+app.post('/comments', (req, res) => {
+  const comment = req.body.comment;
+  comments.push(comment);
+  res.json(comment);
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
